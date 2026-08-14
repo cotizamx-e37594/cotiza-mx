@@ -14,15 +14,15 @@
     <section class="hero"><div class="content"><span class="tag">Herramienta offline · Español</span><h1>Tu trabajo vale.<br>Cotízalo bien.</h1><p class="lead">Cotiza MX convierte horas, costos, margen e IVA en propuestas claras para freelancers mexicanos.</p></div></section>
     <section class="main">
       <article class="card"><h2>Una cotización que puedes defender.</h2><p>Deja de inventar un precio a último momento. Cotiza MX te deja comparar escenarios y entregar una propuesta limpia en minutos.</p><div class="checks"><div class="check"><div><strong>Calcula el precio real</strong><span>Tarifa, horas, costos externos, colchón de alcance, margen e IVA.</span></div></div><div class="check"><div><strong>Envía una propuesta lista</strong><span>Copia el texto, descárgalo como .txt o imprímelo como PDF.</span></div></div><div class="check"><div><strong>Sin suscripción ni registro</strong><span>Funciona offline. Tus escenarios se guardan sólo en tu navegador.</span></div></div></div></article>
-      <aside class="card buy"><h2>Obtén Cotiza MX</h2><div class="price">29 <small>USDC</small></div><p>Pago único · la entrega se solicita al verificar tu transacción.</p><div class="network"><b>Red requerida: Solana</b><br>Envía únicamente USDC por Solana. No envíes USDC desde Ethereum, Base, Polygon u otra red.</div><a class="pay" id="solanaPay" href="solana:7kX2bc8wr1tsJLAr9TuEw1EiLKiTpuFC5Bha6RnAeB7r?amount=29&spl-token=EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v&label=Cotiza%20MX&message=Pago%20por%20Cotiza%20MX">Pagar 29 USDC con Solana Pay</a><div class="address" id="address">7kX2bc8wr1tsJLAr9TuEw1EiLKiTpuFC5Bha6RnAeB7r</div><button class="copy" id="copy" type="button">Copiar dirección</button><div class="verify"><label for="signature">¿Ya pagaste? Pega la firma de transacción</label><input id="signature" autocomplete="off" placeholder="Firma / transaction hash de Solana"><button id="verify" type="button">Verificar y solicitar entrega</button><p class="status" id="status" aria-live="polite"></p></div></aside>
+      <aside class="card buy"><h2>Obtén Cotiza MX</h2><div class="price">20 <small>USDC</small></div><p>Precio de lanzamiento · pago único · la entrega se solicita al verificar tu transacción.</p><div class="network"><b>Red requerida: Solana</b><br>Envía únicamente USDC por Solana. No envíes USDC desde Ethereum, Base, Polygon u otra red.</div><a class="pay" id="solanaPay" href="solana:7kX2bc8wr1tsJLAr9TuEw1EiLKiTpuFC5Bha6RnAeB7r?amount=20&spl-token=EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v&label=Cotiza%20MX&message=Pago%20por%20Cotiza%20MX">Pagar 20 USDC con Solana Pay</a><div class="address" id="address">7kX2bc8wr1tsJLAr9TuEw1EiLKiTpuFC5Bha6RnAeB7r</div><button class="copy" id="copy" type="button">Copiar dirección</button><div class="verify"><label for="signature">¿Ya pagaste? Pega la firma de transacción</label><input id="signature" autocomplete="off" placeholder="Firma / transaction hash de Solana"><button id="verify" type="button">Verificar y solicitar entrega</button><p class="status" id="status" aria-live="polite"></p></div></aside>
     </section>
-    <section class="card how"><h2>Así de simple</h2><div class="steps"><div class="step"><span class="step-num">1</span><h3>Abre Solana Pay</h3><p>Usa Phantom, Backpack u otra cartera compatible.</p></div><div class="step"><span class="step-num">2</span><h3>Envía 29 USDC</h3><p>La compra es exclusivamente en la red Solana.</p></div><div class="step"><span class="step-num">3</span><h3>Verifica y solicita</h3><p>Pega la firma y abre un pedido con el pago comprobado.</p></div></div></section>
+    <section class="card how"><h2>Así de simple</h2><div class="steps"><div class="step"><span class="step-num">1</span><h3>Abre Solana Pay</h3><p>Usa Phantom, Backpack u otra cartera compatible.</p></div><div class="step"><span class="step-num">2</span><h3>Envía 20 USDC</h3><p>La compra es exclusivamente en la red Solana.</p></div><div class="step"><span class="step-num">3</span><h3>Verifica y solicita</h3><p>Pega la firma y abre un pedido con el pago comprobado.</p></div></div></section>
     <p class="note">Cotiza MX es una herramienta operativa; no sustituye asesoría fiscal, legal ni contable. Los pagos se verifican contra la cadena pública de Solana.</p>
   </main>
   <script>
     const OWNER='7kX2bc8wr1tsJLAr9TuEw1EiLKiTpuFC5Bha6RnAeB7r';
     const MINT='EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v';
-    const PRICE=29000000;
+    const PRICE=20000000;
     const address=document.getElementById('address'),status=document.getElementById('status');
     document.getElementById('copy').onclick=async()=>{try{await navigator.clipboard.writeText(OWNER);status.textContent='Dirección copiada.'}catch{status.textContent='Copia la dirección manualmente.'}};
     document.getElementById('verify').onclick=async()=>{
@@ -35,10 +35,10 @@
         if(!tx||tx.meta?.err) throw new Error('No se encontró un pago confirmado. Espera unos segundos y vuelve a intentarlo.');
         const before=new Map((tx.meta.preTokenBalances||[]).filter(b=>b.owner===OWNER&&b.mint===MINT).map(b=>[b.accountIndex,BigInt(b.uiTokenAmount.amount)]));
         const received=(tx.meta.postTokenBalances||[]).filter(b=>b.owner===OWNER&&b.mint===MINT).reduce((sum,b)=>sum+(BigInt(b.uiTokenAmount.amount)-(before.get(b.accountIndex)||0n)),0n);
-        if(received<BigInt(PRICE)) throw new Error('La transacción no muestra el pago completo de 29 USDC a esta cartera.');
+        if(received<BigInt(PRICE)) throw new Error('La transacción no muestra el pago completo de 20 USDC a esta cartera.');
         status.textContent='Pago confirmado. Abriendo tu pedido…';
         const title=encodeURIComponent('Pedido Cotiza MX — pago confirmado');
-        const body=encodeURIComponent(`Hola, compré Cotiza MX.\n\nFirma de Solana: ${signature}\n\nLa página verificó el pago de 29 USDC. Por favor comparte el archivo de entrega.`);
+        const body=encodeURIComponent(`Hola, compré Cotiza MX.\n\nFirma de Solana: ${signature}\n\nLa página verificó el pago de 20 USDC. Por favor comparte el archivo de entrega.`);
         setTimeout(()=>location.href=`https://github.com/cotizamx-e37594/cotiza-mx/issues/new?title=${title}&body=${body}`,600);
       }catch(error){status.textContent=error.message||'No se pudo verificar. Revisa la firma y la red.'}
     };
